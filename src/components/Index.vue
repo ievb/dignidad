@@ -5,28 +5,36 @@
 
 
     <v-expansion-panels focusable inset>
-      <v-expansion-panel v-for="acta in actas" :key="acta.codigoMesa">
-        <v-expansion-panel-header>
-           Acta: {{ acta.codigoMesa }}
-          <v-chip class="ma-2 mw-80" color="green" text-color="green" align="right" outlined x-small>
-            Presidencial
-          </v-chip>
-          <v-chip class="ma-2 mw-80" color="orange" text-color="orange" align="right" outlined x-small>
-            Uninominal
-          </v-chip>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <div v-for="child in acta.datoAdicional.tabla" :key="child.nombre">
-            {{ child.nombre }}
-            <v-chip class="ma-2" color="green" text-color="green" outlined x-small>
-              {{ child.valor1 }}
+
+        <v-expansion-panel v-for="acta in actas" :key="acta.codigoMesa">
+          <v-expansion-panel-header>
+            Acta: {{ acta.codigoMesa }}
+            <v-chip class="ma-2 mw-80" color="green" text-color="green" align="right" outlined x-small>
+              Presidencial
             </v-chip>
-            <v-chip class="ma-2" color="orange" text-color="orange" outlined x-small>
-              {{ child.valor2 }}
+            <v-chip class="ma-2 mw-80" color="orange" text-color="orange" align="right" outlined x-small>
+              Uninominal
             </v-chip>
-          </div>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row no-gutters>
+              <v-col md="3">
+                <div v-for="child in acta.datoAdicional.tabla" :key="child.nombre">
+                  {{ child.nombre }}
+                  <v-chip class="ma-2" color="green" text-color="green" outlined x-small>
+                    {{ child.valor1 }}
+                  </v-chip>
+                  <v-chip class="ma-2" color="orange" text-color="orange" outlined x-small>
+                    {{ child.valor2 }}
+                  </v-chip>
+                </div>
+              </v-col>
+              <v-col md="9">
+                <img width="525" height="350" :src="acta.datoAdicional.adjunto[0].valor"/>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
     </v-expansion-panels>
   </v-container>
 </template>
@@ -142,6 +150,7 @@ export default {
     this.actas.push(x);
     console.info("fecha: ", this.actas);
     console.dir(x);
+    console.info('imagen: ', this.actas[0].datoAdicional.adjunto[0].valor);
     /*
       axios.post('https://computo.oep.org.bo/api/v1/resultado/mesa', {"codigoMesa": "25569"})
         .then(response => {
